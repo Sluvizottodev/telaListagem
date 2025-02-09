@@ -1,16 +1,40 @@
-# replica_list_moteis
+# 📱 Home Page Listagem
 
-O desafio consiste em criar uma réplica da tela de listagem de motéis (apenas a aba "Ir Agora") do aplicativo Guia de Motéis GO, utilizando links como API mock para obter os dados.
+Este aplicativo Flutter consome duas APIs para listar motéis e suas informações, como nome, imagem e preço.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🛠️ Funcionalidades
 
-A few resources to get you started if this is your first Flutter project:
+- Listagem de motéis com imagem, nome e preço.
+- Consumo de duas APIs externas:
+  - [JSONKeeper](https://jsonkeeper.com/b/1IXK)
+  - [nPoint](https://www.npoint.io/docs/e728bb91e0cd56cc0711)
+- Tratamento de erros para requisições.
+- Arquitetura organizada com Provider.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🚀 Como Executar
+
+### Pré-requisitos
+
+- Flutter instalado ([Instruções](https://flutter.dev/docs/get-started/install))
+- Emulador Android/iOS ou dispositivo físico configurado.
+
+
+📦 Estrutura do Projeto
+```
+📂 lib
+├── 📁 models
+│   └── motel_model.dart  # Modelo de dados para os motéis
+├── 📁 services
+│   └── api_service.dart  # Serviço de integração com APIs
+└── 📁 providers
+    └── motel_provider.dart  # Provider para gerenciamento de estado
+```
+🛑 Pré-requisitos
+```
+Dart >= 3.0.0
+Flutter >= 3.10.0
+```
