@@ -12,7 +12,6 @@ class _MotelListScreenState extends State<MotelListScreen> {
   bool _isLoading = true;
   String? _errorMessage;
 
-
   @override
   void initState() {
     super.initState();
@@ -20,13 +19,12 @@ class _MotelListScreenState extends State<MotelListScreen> {
       await _loadMotels();
     });
   }
+
   Future<void> _loadMotels() async {
     try {
       await Provider.of<MotelProvider>(context, listen: false).fetchMotels();
       if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
+        setState(() => _isLoading = false);
       }
     } catch (e) {
       if (mounted) {
@@ -43,9 +41,12 @@ class _MotelListScreenState extends State<MotelListScreen> {
     final motelProvider = Provider.of<MotelProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text('Motéis Disponíveis')),
+      appBar: AppBar(
+        title: const Text('Motéis Disponíveis'),
+        centerTitle: true,
+      ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : _errorMessage != null
           ? Center(child: Text(_errorMessage!))
           : ListView.builder(
