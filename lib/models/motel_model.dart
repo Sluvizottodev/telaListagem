@@ -1,33 +1,69 @@
+// lib/models/motel_model.dart
 class Motel {
-  final String name;
-  final double price;
-  final String imageUrl;
+  final String fantasia;
+  final String logo;
+  final String bairro;
+  final double distancia;
+  final List<Suite> suites;
 
   Motel({
-    required this.name,
-    required this.price,
-    required this.imageUrl,
+    required this.fantasia,
+    required this.logo,
+    required this.bairro,
+    required this.distancia,
+    required this.suites,
   });
 
   factory Motel.fromJson(Map<String, dynamic> json) {
-    // Garantir que a chave 'name' exista
-    String name = json['fantasia'] ?? 'Nome não disponível';
-    double price = 0.0;
-
-    // Garantir que a chave 'price' exista e seja convertida corretamente
-    if (json['suites'] != null && json['suites'].isNotEmpty) {
-      var suite = json['suites'][0];
-      if (suite['periodos'] != null && suite['periodos'].isNotEmpty) {
-        price = suite['periodos'][0]['valor']?.toDouble() ?? 0.0;
-      }
-    }
-
-    String imageUrl = json['logo'] ?? 'URL da imagem não disponível';
+    var suitesList = json['suites'] as List;
+    List<Suite> suites = suitesList.map((i) => Suite.fromJson(i)).toList();
 
     return Motel(
-      name: name,
-      price: price,
-      imageUrl: imageUrl,
+      fantasia: json['fantasia'] ?? '',
+      logo: json['logo'] ?? '',
+      bairro: json['bairro'] ?? '',
+      distancia: json['distancia'] ?? '',
+      suites: suites,
+    );
+  }
+}
+
+class Suite {
+  final String nome;
+  final List<String> fotos;
+  final List<Periodo> periodos;
+
+  Suite({
+    required this.nome,
+    required this.fotos,
+    required this.periodos,
+  });
+
+  factory Suite.fromJson(Map<String, dynamic> json) {
+    var periodosList = json['periodos'] as List;
+    List<Periodo> periodos = periodosList.map((i) => Periodo.fromJson(i)).toList();
+
+    return Suite(
+      nome: json['nome'],
+      fotos: List<String>.from(json['fotos']),
+      periodos: periodos,
+    );
+  }
+}
+
+class Periodo {
+  final String tempoFormatado;
+  final double valor;
+
+  Periodo({
+    required this.tempoFormatado,
+    required this.valor,
+  });
+
+  factory Periodo.fromJson(Map<String, dynamic> json) {
+    return Periodo(
+      tempoFormatado: json['tempoFormatado'],
+      valor: json['valor'],
     );
   }
 }
