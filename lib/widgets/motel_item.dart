@@ -3,10 +3,17 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '../models/motel_model.dart';
 import 'itens_suites.dart';
 
-class MotelItem extends StatelessWidget {
+class MotelItem extends StatefulWidget {
   final Motel motel;
 
   const MotelItem({super.key, required this.motel});
+
+  @override
+  _MotelItemState createState() => _MotelItemState();
+}
+
+class _MotelItemState extends State<MotelItem> {
+  bool isFavorited = false;
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +27,9 @@ class MotelItem extends StatelessWidget {
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(12.0)),
             child: CachedNetworkImage(
-              imageUrl: motel.suites.isNotEmpty && motel.suites.first.fotos.isNotEmpty
-                  ? motel.suites.first.fotos.first
-                  : motel.logo,
+              imageUrl: widget.motel.suites.isNotEmpty && widget.motel.suites.first.fotos.isNotEmpty
+                  ? widget.motel.suites.first.fotos.first
+                  : widget.motel.logo,
               placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
               errorWidget: (context, url, error) => const Icon(Icons.error),
               height: 180,
@@ -36,13 +43,30 @@ class MotelItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(widget.motel.logo),
+                      radius: 20, // Ajuste o tamanho conforme necessário
+                      backgroundColor: Colors.transparent,
+                    ),
+                    const SizedBox(width: 10), // Espaço entre a logo e o nome
                     Text(
-                      motel.fantasia,
+                      widget.motel.fantasia,
                       style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
                     ),
-                    const Icon(Icons.favorite_border, color: Colors.grey),
+                    Spacer(), // Para o botão de favorito ir para a direita
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isFavorited = !isFavorited;
+                        });
+                      },
+                      child: Icon(
+                        isFavorited ? Icons.favorite : Icons.favorite_border,
+                        color: isFavorited ? Colors.red : Colors.grey,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 8),
@@ -51,15 +75,15 @@ class MotelItem extends StatelessWidget {
                     const Icon(Icons.location_on, color: Colors.grey, size: 16),
                     const SizedBox(width: 4),
                     Text(
-                      '${motel.bairro} - ${motel.distancia} km',
+                      '${widget.motel.bairro} - ${widget.motel.distancia} km',
                       style: const TextStyle(fontSize: 14, color: Colors.grey),
                     ),
                   ],
                 ),
                 const SizedBox(height: 16),
-                ItensSuitesWidget(suite: motel.suites.first),
+                ItensSuitesWidget(suite: widget.motel.suites.first),
                 const SizedBox(height: 16),
-                ..._buildPeriodWidgets(motel.suites.first),
+                ..._buildPeriodWidgets(widget.motel.suites.first),
               ],
             ),
           ),
@@ -111,4 +135,3 @@ class MotelItem extends StatelessWidget {
     }).toList();
   }
 }
-

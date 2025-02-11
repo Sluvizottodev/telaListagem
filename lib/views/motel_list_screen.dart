@@ -47,7 +47,6 @@ class _MotelListScreenState extends State<MotelListScreen> {
         leading: IconButton(
           icon: const Icon(Icons.menu, color: Colors.white),
           onPressed: () {
-            // Handle menu action
           },
         ),
         title: Row(
@@ -56,7 +55,7 @@ class _MotelListScreenState extends State<MotelListScreen> {
           children: [
             ElevatedButton(
               onPressed: () {
-                // Handle "Ir Agora" action
+                // "Ir Agora"
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
@@ -80,7 +79,7 @@ class _MotelListScreenState extends State<MotelListScreen> {
             const SizedBox(width: 8),
             ElevatedButton(
               onPressed: () {
-                // Handle "Ir Outro Dia" action
+                // "Ir Outro Dia"
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red[700],
@@ -107,28 +106,26 @@ class _MotelListScreenState extends State<MotelListScreen> {
           IconButton(
             icon: const Icon(Icons.search, color: Colors.white),
             onPressed: () {
-              // Handle search action
             },
           ),
         ],
-        bottom: PreferredSize( // Use PreferredSize to define height
-          preferredSize: const Size.fromHeight(kToolbarHeight / 1.5), // Adjust height
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight / 1.5),
           child: Container(
             color: Colors.red,
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,  //Center the dropdown
+              mainAxisAlignment: MainAxisAlignment.center, //Center the dropdown
               children: [
                 DropdownButton<String>(
-                  isExpanded: false, // Don't expand
+                  isExpanded: false,
                   value: 'rio de janeiro',
-                  icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
-                  iconSize: 24,
+                  icon: const Icon(Icons.keyboard_arrow_down, color: Colors.white),
+                  iconSize: 20,
                   elevation: 16,
                   style: const TextStyle(color: Colors.white, fontSize: 16),
                   underline: Container(height: 2, color: Colors.transparent),
                   onChanged: (String? newValue) {
-                    // Handle dropdown change
                   },
                   items: <String>['rio de janeiro', 'são paulo', 'minas gerais']
                       .map<DropdownMenuItem<String>>((String value) {
@@ -153,59 +150,50 @@ class _MotelListScreenState extends State<MotelListScreen> {
               child: Row(
                 children: [
                   FilterChip(
-                    label: const Text('filtros', style: TextStyle(color: Colors.black)),
+                    label: const Text('Filtros',
+                        style: TextStyle(color: Colors.black)),
                     selected: false,
-                    onSelected: (bool value) {
-                      // Ação para abrir filtros
-                    },
-                    backgroundColor: Colors.white,
+                    onSelected: (bool value) {},
+                    backgroundColor: Colors.white.withOpacity(0.8), // Suavizar o fundo
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
-                      side: const BorderSide(color: Colors.grey, width: 0.5),
+                      side: const BorderSide(color: Colors.grey, width: 0.3), // Linha mais fina
                     ),
                   ),
                   const SizedBox(width: 8),
                   FilterChip(
-                    label: const Text('Com desconto', style: TextStyle(color: Colors.white)),
+                    label: const Text('Com desconto',
+                        style: TextStyle(color: Colors.white)),
                     selected: false,
-                    onSelected: (bool value) {
-                      // Ação para filtrar por desconto
-                    },
-                    backgroundColor: Colors.red,
-                    selectedColor: Colors.blue[700],
+                    onSelected: (bool value) {},
+                    backgroundColor: Colors.red.withOpacity(0.7), // Opacidade mais suave
                     checkmarkColor: Colors.white,
                   ),
                   const SizedBox(width: 8),
                   FilterChip(
-                    label: const Text('Disponíveis', style: TextStyle(color: Colors.white)),
+                    label: const Text('Disponíveis',
+                        style: TextStyle(color: Colors.white)),
                     selected: false,
-                    onSelected: (bool value) {
-                      // Ação para filtrar por disponibilidade
-                    },
-                    backgroundColor: Colors.red,
-                    selectedColor: Colors.blue[700],
+                    onSelected: (bool value) {},
+                    backgroundColor: Colors.red.withOpacity(0.7),
                     checkmarkColor: Colors.white,
                   ),
                   const SizedBox(width: 8),
                   FilterChip(
-                    label: const Text('Hidro', style: TextStyle(color: Colors.white)),
+                    label: const Text('Hidro',
+                        style: TextStyle(color: Colors.white)),
                     selected: false,
-                    onSelected: (bool value) {
-                      // Ação para filtrar por hidro
-                    },
-                    backgroundColor: Colors.red,
-                    selectedColor: Colors.blue[700],
+                    onSelected: (bool value) {},
+                    backgroundColor: Colors.red.withOpacity(0.7),
                     checkmarkColor: Colors.white,
                   ),
                   const SizedBox(width: 8),
                   FilterChip(
-                    label: const Text('Piscina', style: TextStyle(color: Colors.white)),
+                    label: const Text('Piscina',
+                        style: TextStyle(color: Colors.white)),
                     selected: false,
-                    onSelected: (bool value) {
-                      // Ação para filtrar por piscina
-                    },
-                    backgroundColor: Colors.red,
-                    selectedColor: Colors.blue[700],
+                    onSelected: (bool value) {},
+                    backgroundColor: Colors.red.withOpacity(0.7),
                     checkmarkColor: Colors.white,
                   ),
                 ],
@@ -229,12 +217,12 @@ class _MotelListScreenState extends State<MotelListScreen> {
                 child: _isLoading
                     ? const Center(child: CircularProgressIndicator())
                     : _errorMessage != null
-                    ? Center(child: Text(_errorMessage!))
-                    : ListView.builder(
-                  itemCount: motelProvider.motels.length,
-                  itemBuilder: (ctx, i) =>
-                      MotelItem(motel: motelProvider.motels[i]),
-                ),
+                        ? Center(child: Text(_errorMessage!))
+                        : ListView.builder(
+                            itemCount: motelProvider.motels.length,
+                            itemBuilder: (ctx, i) =>
+                                MotelItem(motel: motelProvider.motels[i]),
+                          ),
               ),
             ),
           ),
@@ -243,4 +231,3 @@ class _MotelListScreenState extends State<MotelListScreen> {
     );
   }
 }
-

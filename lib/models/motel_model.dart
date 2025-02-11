@@ -1,4 +1,4 @@
-// lib/models/motel_model.dart
+
 class Motel {
   final String fantasia;
   final String logo;
@@ -74,7 +74,6 @@ class Suite {
   }
 }
 
-// lib/models/motel_model.dart
 class Periodo {
   final String tempoFormatado;
   final double valor;
