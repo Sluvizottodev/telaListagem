@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../models/motel_model.dart';
-import 'itens_suites.dart'; // Importa o widget de ícones da suíte
+import 'itens_suites.dart';
 
 class MotelItem extends StatelessWidget {
   final Motel motel;
@@ -17,7 +17,6 @@ class MotelItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Imagem do motel
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(12.0)),
             child: CachedNetworkImage(
@@ -36,7 +35,6 @@ class MotelItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Motel Name and Heart Icon
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -48,7 +46,6 @@ class MotelItem extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 8),
-                // Motel Location
                 Row(
                   children: [
                     const Icon(Icons.location_on, color: Colors.grey, size: 16),
@@ -60,10 +57,8 @@ class MotelItem extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 16),
-                // Suite Items Icons
                 ItensSuitesWidget(suite: motel.suites.first),
                 const SizedBox(height: 16),
-                // Period Options
                 ..._buildPeriodWidgets(motel.suites.first),
               ],
             ),
@@ -73,7 +68,6 @@ class MotelItem extends StatelessWidget {
     );
   }
 
-  // Widget builder for periods
   List<Widget> _buildPeriodWidgets(Suite suite) {
     return suite.periodos.take(2).map((periodo) {
       final valorComDesconto = periodo.desconto != null ? periodo.valorTotal : periodo.valor;

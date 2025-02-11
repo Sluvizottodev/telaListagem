@@ -9,14 +9,13 @@ class ItensSuitesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      alignment: WrapAlignment.start, // Alinha os itens à esquerda
-      spacing: 16.0, // Define o espaçamento horizontal entre os itens
-      runSpacing: 12.0, // Define o espaçamento vertical entre as linhas
+      alignment: WrapAlignment.center, // Centralize the items
+      spacing: 16.0,
+      runSpacing: 12.0,
       children: suite.categoriaItens.map((item) {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Usar CachedNetworkImage para carregar a imagem do ícone
             SizedBox(
               width: 48,
               height: 48,

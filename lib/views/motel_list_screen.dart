@@ -43,17 +43,17 @@ class _MotelListScreenState extends State<MotelListScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        centerTitle: false,
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.menu, color: Colors.white),
+          onPressed: () {
+            // Handle menu action
+          },
+        ),
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            IconButton(
-              icon: const Icon(Icons.menu, color: Colors.white),
-              onPressed: () {
-                // Handle menu action
-              },
-            ),
-            const SizedBox(width: 8),
             ElevatedButton(
               onPressed: () {
                 // Handle "Ir Agora" action
@@ -111,39 +111,40 @@ class _MotelListScreenState extends State<MotelListScreen> {
             },
           ),
         ],
-      ),
-      body: Column(
-        children: [
-          // Location Dropdown
-          Container(
+        bottom: PreferredSize( // Use PreferredSize to define height
+          preferredSize: const Size.fromHeight(kToolbarHeight / 1.5), // Adjust height
+          child: Container(
             color: Colors.red,
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,  //Center the dropdown
               children: [
-                Expanded(
-                  child: DropdownButton<String>(
-                    isExpanded: true,
-                    value: 'rio de janeiro',
-                    icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
-                    iconSize: 24,
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.white, fontSize: 16),
-                    underline: Container(height: 2, color: Colors.transparent),
-                    onChanged: (String? newValue) {
-                      // Handle dropdown change
-                    },
-                    items: <String>['rio de janeiro', 'são paulo', 'minas gerais']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
+                DropdownButton<String>(
+                  isExpanded: false, // Don't expand
+                  value: 'rio de janeiro',
+                  icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
+                  iconSize: 24,
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                  underline: Container(height: 2, color: Colors.transparent),
+                  onChanged: (String? newValue) {
+                    // Handle dropdown change
+                  },
+                  items: <String>['rio de janeiro', 'são paulo', 'minas gerais']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
               ],
             ),
           ),
+        ),
+      ),
+      body: Column(
+        children: [
           // Filters
           Padding(
             padding: const EdgeInsets.all(8.0),
