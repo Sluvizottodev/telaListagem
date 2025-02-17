@@ -24,9 +24,9 @@ Não é necessário implementar navegação para outras telas.
 
 <div align="center">
 
-[📸 Ver Screenshot](https://drive.google.com/file/d/1XQGog0BsXClY-rHvsSn5RlAOHb2VtGKC/view?usp=sharing)
+[📸 Ver Screenshot](https://drive.google.com/file/d/1hQvoYbYQ1-bt23Ms5vrn-wbmmrsNljJ6/view?usp=sharing)
 
-[🎥 Ver Vídeo Demo](https://drive.google.com/file/d/1hQvoYbYQ1-bt23Ms5vrn-wbmmrsNljJ6/view?usp=sharing)
+[🎥 Ver Vídeo Demo](https://drive.google.com/file/d/1XQGog0BsXClY-rHvsSn5RlAOHb2VtGKC/view?usp=sharing).
 
 </div>
 
