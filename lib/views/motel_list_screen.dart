@@ -36,6 +36,43 @@ class _MotelListScreenState extends State<MotelListScreen> {
     }
   }
 
+  Widget _buildFilterChip(String filter, String label) {
+    final motelProvider = Provider.of<MotelProvider>(context);
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            spreadRadius: 0,
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: FilterChip(
+        label: Text(
+          label,
+          style: TextStyle(
+            color: Colors.grey[700],
+            fontSize: 14,
+          ),
+        ),
+        selected: motelProvider.selectedFilters.contains(filter),
+        onSelected: (_) => motelProvider.toggleFilter(filter),
+        backgroundColor: Colors.transparent,
+        selectedColor: Colors.white,
+        checkmarkColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        showCheckmark: false,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final motelProvider = Provider.of<MotelProvider>(context);
@@ -46,17 +83,14 @@ class _MotelListScreenState extends State<MotelListScreen> {
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.menu, color: Colors.white),
-          onPressed: () {
-          },
+          onPressed: () {},
         ),
         title: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () {
-                // "Ir Agora"
-              },
+              onPressed: () {},
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.red,
@@ -78,9 +112,7 @@ class _MotelListScreenState extends State<MotelListScreen> {
             ),
             const SizedBox(width: 8),
             ElevatedButton(
-              onPressed: () {
-                // "Ir Outro Dia"
-              },
+              onPressed: () {},
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red[700],
                 foregroundColor: Colors.white,
@@ -105,8 +137,7 @@ class _MotelListScreenState extends State<MotelListScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.search, color: Colors.white),
-            onPressed: () {
-            },
+            onPressed: () {},
           ),
         ],
         bottom: PreferredSize(
@@ -115,7 +146,7 @@ class _MotelListScreenState extends State<MotelListScreen> {
             color: Colors.red,
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center, //Center the dropdown
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 DropdownButton<String>(
                   isExpanded: false,
@@ -125,8 +156,7 @@ class _MotelListScreenState extends State<MotelListScreen> {
                   elevation: 16,
                   style: const TextStyle(color: Colors.white, fontSize: 16),
                   underline: Container(height: 2, color: Colors.transparent),
-                  onChanged: (String? newValue) {
-                  },
+                  onChanged: (String? newValue) {},
                   items: <String>['rio de janeiro', 'são paulo', 'minas gerais']
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
@@ -142,88 +172,64 @@ class _MotelListScreenState extends State<MotelListScreen> {
       ),
       body: Column(
         children: [
-          // Filters
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  FilterChip(
-                    label: const Text('Filtros',
-                        style: TextStyle(color: Colors.black)),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+            child: Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        spreadRadius: 0,
+                        blurRadius: 4,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: FilterChip(
+                    label: Row(
+                      children: [
+                        Icon(Icons.filter_list,
+                            size: 18,
+                            color: Colors.grey[600]
+                        ),
+                        const SizedBox(width: 4),
+                        Text('filtros',
+                            style: TextStyle(color: Colors.grey[600])),
+                      ],
+                    ),
                     selected: false,
-                    onSelected: (bool value) {},
-                    backgroundColor: Colors.white.withOpacity(0.8), // Suavizar o fundo
+                    onSelected: (_) {},
+                    backgroundColor: Colors.transparent,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
-                      side: const BorderSide(color: Colors.grey, width: 0.3), // Linha mais fina
                     ),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   ),
-                  const SizedBox(width: 8),
-                  FilterChip(
-                    label: const Text('Com desconto',
-                        style: TextStyle(color: Colors.white)),
-                    selected: false,
-                    onSelected: (bool value) {},
-                    backgroundColor: Colors.red.withOpacity(0.7), // Opacidade mais suave
-                    checkmarkColor: Colors.white,
-                  ),
-                  const SizedBox(width: 8),
-                  FilterChip(
-                    label: const Text('Disponíveis',
-                        style: TextStyle(color: Colors.white)),
-                    selected: false,
-                    onSelected: (bool value) {},
-                    backgroundColor: Colors.red.withOpacity(0.7),
-                    checkmarkColor: Colors.white,
-                  ),
-                  const SizedBox(width: 8),
-                  FilterChip(
-                    label: const Text('Hidro',
-                        style: TextStyle(color: Colors.white)),
-                    selected: false,
-                    onSelected: (bool value) {},
-                    backgroundColor: Colors.red.withOpacity(0.7),
-                    checkmarkColor: Colors.white,
-                  ),
-                  const SizedBox(width: 8),
-                  FilterChip(
-                    label: const Text('Piscina',
-                        style: TextStyle(color: Colors.white)),
-                    selected: false,
-                    onSelected: (bool value) {},
-                    backgroundColor: Colors.red.withOpacity(0.7),
-                    checkmarkColor: Colors.white,
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(width: 8),
+                _buildFilterChip('desconto', 'com desconto'),
+                const SizedBox(width: 8),
+                _buildFilterChip('disponiveis', 'disponíveis'),
+                const SizedBox(width: 8),
+                _buildFilterChip('hidro', 'hidro'),
+                const SizedBox(width: 8),
+                _buildFilterChip('piscina', 'piscina'),
+              ],
             ),
           ),
           Expanded(
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                ),
-              ),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                ),
-                child: _isLoading
-                    ? const Center(child: CircularProgressIndicator())
-                    : _errorMessage != null
-                        ? Center(child: Text(_errorMessage!))
-                        : ListView.builder(
-                            itemCount: motelProvider.motels.length,
-                            itemBuilder: (ctx, i) =>
-                                MotelItem(motel: motelProvider.motels[i]),
-                          ),
-              ),
+            child: _isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : _errorMessage != null
+                ? Center(child: Text(_errorMessage!))
+                : ListView.builder(
+              itemCount: motelProvider.motels.length,
+              itemBuilder: (ctx, i) => MotelItem(motel: motelProvider.motels[i]),
             ),
           ),
         ],

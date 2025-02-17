@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:replica_list_moteis/widgets/suite_widgets.dart';
 import '../models/motel_model.dart';
 import 'itens_suites.dart';
 
 class MotelItem extends StatefulWidget {
   final Motel motel;
 
-  const MotelItem({super.key, required this.motel});
+  const MotelItem({Key? key, required this.motel}) : super(key: key);
 
   @override
   _MotelItemState createState() => _MotelItemState();
@@ -19,119 +20,72 @@ class _MotelItemState extends State<MotelItem> {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.all(12.0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-      elevation: 6,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+      elevation: 2,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(12.0)),
-            child: CachedNetworkImage(
-              imageUrl: widget.motel.suites.isNotEmpty && widget.motel.suites.first.fotos.isNotEmpty
-                  ? widget.motel.suites.first.fotos.first
-                  : widget.motel.logo,
-              placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-              height: 180,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
+          // Cabeçalho do Motel
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(widget.motel.logo),
-                      radius: 20, // Ajuste o tamanho conforme necessário
-                      backgroundColor: Colors.transparent,
-                    ),
-                    const SizedBox(width: 10), // Espaço entre a logo e o nome
-                    Text(
-                      widget.motel.fantasia,
-                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
-                    ),
-                    Spacer(), // Para o botão de favorito ir para a direita
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isFavorited = !isFavorited;
-                        });
-                      },
-                      child: Icon(
-                        isFavorited ? Icons.favorite : Icons.favorite_border,
-                        color: isFavorited ? Colors.red : Colors.grey,
+                // Logo do Motel
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.network(
+                    widget.motel.logo,
+                    width: 40,
+                    height: 40,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                // Informações do Motel
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.motel.fantasia.toLowerCase(),
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                        ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 4),
+                      Text(
+                        '${widget.motel.bairro.toLowerCase()} - ${widget.motel.distancia.toStringAsFixed(1)} km',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    const Icon(Icons.location_on, color: Colors.grey, size: 16),
-                    const SizedBox(width: 4),
-                    Text(
-                      '${widget.motel.bairro} - ${widget.motel.distancia} km',
-                      style: const TextStyle(fontSize: 14, color: Colors.grey),
-                    ),
-                  ],
+                // Botão de Favorito
+                IconButton(
+                  icon: Icon(
+                    isFavorited ? Icons.favorite : Icons.favorite_border,
+                    color: isFavorited ? Colors.red : Colors.grey,
+                    size: 28,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isFavorited = !isFavorited;
+                    });
+                  },
                 ),
-                const SizedBox(height: 16),
-                ItensSuitesWidget(suite: widget.motel.suites.first),
-                const SizedBox(height: 16),
-                ..._buildPeriodWidgets(widget.motel.suites.first),
               ],
             ),
           ),
+          // Suítes
+          ...widget.motel.suites.map((suite) => SuiteItem(suite: suite)).toList(),
         ],
       ),
     );
-  }
-
-  List<Widget> _buildPeriodWidgets(Suite suite) {
-    return suite.periodos.take(2).map((periodo) {
-      final valorComDesconto = periodo.desconto != null ? periodo.valorTotal : periodo.valor;
-      return Container(
-        decoration: BoxDecoration(
-          color: Colors.grey[50],
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        margin: const EdgeInsets.symmetric(vertical: 4.0),
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(periodo.tempoFormatado, style: const TextStyle(fontSize: 16, color: Colors.black)),
-            RichText(
-              text: TextSpan(
-                style: const TextStyle(fontSize: 16),
-                children: [
-                  if (periodo.desconto != null)
-                    TextSpan(
-                      text: 'R\$ ${periodo.valor.toStringAsFixed(2)}  ',
-                      style: const TextStyle(
-                        decoration: TextDecoration.lineThrough,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  TextSpan(
-                    text: 'R\$ ${valorComDesconto.toStringAsFixed(2)}',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: periodo.desconto != null ? Colors.green : Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
-          ],
-        ),
-      );
-    }).toList();
   }
 }

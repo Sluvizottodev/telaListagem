@@ -1,4 +1,3 @@
-
 class Motel {
   final String fantasia;
   final String logo;
@@ -22,8 +21,77 @@ class Motel {
       fantasia: json['fantasia'] ?? '',
       logo: json['logo'] ?? '',
       bairro: json['bairro'] ?? '',
-      distancia: json['distancia'] ?? '',
+      distancia: json['distancia'] ?? 0.0,
       suites: suites,
+    );
+  }
+}
+
+class Suite {
+  final String nome;
+  final List<String> fotos;
+  final List<Item> itens;
+  final List<CategoriaItem> categoriaItens;
+  final List<Periodo> periodos;
+
+  Suite({
+    required this.nome,
+    required this.fotos,
+    required this.itens,
+    required this.categoriaItens,
+    required this.periodos,
+  });
+
+  factory Suite.fromJson(Map<String, dynamic> json) {
+    print('Processando Suite: ${json['nome']}');
+
+    try {
+      var itensList = json['itens'] as List? ?? [];
+      List<Item> itens = itensList.map((i) => Item.fromJson(i)).toList();
+
+      var categoriaItensList = json['categoriaItens'] as List? ?? [];
+      print('categoriaItensList raw: $categoriaItensList');
+
+      List<CategoriaItem> categoriaItens = [];
+      try {
+        categoriaItens = categoriaItensList
+            .map((i) => CategoriaItem.fromJson(i))
+            .toList();
+      } catch (e) {
+        print('Erro ao processar categoriaItens: $e');
+      }
+
+      var periodosList = json['periodos'] as List? ?? [];
+      List<Periodo> periodos = periodosList.map((i) => Periodo.fromJson(i)).toList();
+
+      return Suite(
+        nome: json['nome'] ?? '',
+        fotos: List<String>.from(json['fotos'] ?? []),
+        itens: itens,
+        categoriaItens: categoriaItens,
+        periodos: periodos,
+      );
+    } catch (e) {
+      print('Erro ao processar Suite: $e');
+      return Suite(
+        nome: json['nome'] ?? '',
+        fotos: [],
+        itens: [],
+        categoriaItens: [],
+        periodos: [],
+      );
+    }
+  }
+}
+
+class Item {
+  final String nome;
+
+  Item({required this.nome});
+
+  factory Item.fromJson(Map<String, dynamic> json) {
+    return Item(
+      nome: json['nome'] ?? '',
     );
   }
 }
@@ -38,39 +106,18 @@ class CategoriaItem {
   });
 
   factory CategoriaItem.fromJson(Map<String, dynamic> json) {
-    return CategoriaItem(
-      nome: json['nome'],
-      icone: json['icone'],
-    );
-  }
-}
-
-class Suite {
-  final String nome;
-  final List<String> fotos;
-  final List<Periodo> periodos;
-  final List<CategoriaItem> categoriaItens;  // Lista de itens de categoria
-
-  Suite({
-    required this.nome,
-    required this.fotos,
-    required this.periodos,
-    required this.categoriaItens,  // Lista de itens de categoria
-  });
-
-  factory Suite.fromJson(Map<String, dynamic> json) {
-    var periodosList = json['periodos'] as List? ?? [];
-    List<Periodo> periodos = periodosList.map((i) => Periodo.fromJson(i)).toList();
-
-    var categoriaItensList = json['categoriaItens'] as List? ?? [];  // Garante que a lista nunca será null
-    List<CategoriaItem> categoriaItens = categoriaItensList.map((i) => CategoriaItem.fromJson(i)).toList();
-
-    return Suite(
-      nome: json['nome'] ?? '',
-      fotos: List<String>.from(json['fotos'] ?? []),
-      periodos: periodos,
-      categoriaItens: categoriaItens,  // Garantir que a lista seja inicializada corretamente
-    );
+    try {
+      return CategoriaItem(
+        nome: json['nome'] ?? '',
+        icone: json['icone'] ?? '',
+      );
+    } catch (e) {
+      print('Erro ao processar CategoriaItem: $e');
+      return CategoriaItem(
+        nome: '',
+        icone: '',
+      );
+    }
   }
 }
 
