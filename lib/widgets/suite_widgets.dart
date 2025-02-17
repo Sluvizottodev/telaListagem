@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../models/motel_model.dart';
-import 'itens_suites.dart';
-import 'motel_item.dart';
+import 'itens_suites_widgets.dart';
+import 'motel_item_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'periodo_widgets.dart';

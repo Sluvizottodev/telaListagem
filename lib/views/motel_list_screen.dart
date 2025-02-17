@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/motel_provider.dart';
-import '../widgets/motel_item.dart';
+import '../widgets/motel_item_widgets.dart';
 
 class MotelListScreen extends StatefulWidget {
   @override
@@ -151,7 +151,8 @@ class _MotelListScreenState extends State<MotelListScreen> {
                 DropdownButton<String>(
                   isExpanded: false,
                   value: 'rio de janeiro',
-                  icon: const Icon(Icons.keyboard_arrow_down, color: Colors.white),
+                  icon: const Icon(Icons.keyboard_arrow_down,
+                      color: Colors.white),
                   iconSize: 20,
                   elevation: 16,
                   style: const TextStyle(color: Colors.white, fontSize: 16),
@@ -194,9 +195,7 @@ class _MotelListScreenState extends State<MotelListScreen> {
                     label: Row(
                       children: [
                         Icon(Icons.filter_list,
-                            size: 18,
-                            color: Colors.grey[600]
-                        ),
+                            size: 18, color: Colors.grey[600]),
                         const SizedBox(width: 4),
                         Text('filtros',
                             style: TextStyle(color: Colors.grey[600])),
@@ -208,7 +207,8 @@ class _MotelListScreenState extends State<MotelListScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -226,11 +226,12 @@ class _MotelListScreenState extends State<MotelListScreen> {
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : _errorMessage != null
-                ? Center(child: Text(_errorMessage!))
-                : ListView.builder(
-              itemCount: motelProvider.motels.length,
-              itemBuilder: (ctx, i) => MotelItem(motel: motelProvider.motels[i]),
-            ),
+                    ? Center(child: Text(_errorMessage!))
+                    : ListView.builder(
+                        itemCount: motelProvider.motels.length,
+                        itemBuilder: (ctx, i) =>
+                            MotelItem(motel: motelProvider.motels[i]),
+                      ),
           ),
         ],
       ),

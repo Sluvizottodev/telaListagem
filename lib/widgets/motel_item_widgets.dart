@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:replica_list_moteis/widgets/suite_widgets.dart';
 import '../models/motel_model.dart';
-import 'itens_suites.dart';
+import 'itens_suites_widgets.dart';
 
 class MotelItem extends StatefulWidget {
   final Motel motel;
