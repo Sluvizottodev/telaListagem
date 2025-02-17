@@ -1,39 +1,56 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:mockito/annotations.dart';
+import 'package:replica_list_moteis/models/motel_model.dart';
 import 'package:replica_list_moteis/providers/motel_provider.dart';
 import 'package:replica_list_moteis/services/api_service.dart';
-import 'package:replica_list_moteis/models/motel_model.dart';
 
-// Mock da classe ApiService
-class MockApiService extends Mock implements ApiService {}
+import 'motel_provider_test.mocks.dart';
+
+@GenerateNiceMocks([MockSpec<ApiService>()])
 
 void main() {
-  group('MotelProvider Tests', () {
-    late MotelProvider provider;
-    late MockApiService mockApiService;
+  late MotelProvider provider;
+  late MockApiService mockApiService;
 
-    setUp(() {
-      mockApiService = MockApiService();
-      provider = MotelProvider(apiService: mockApiService);
+  setUp(() {
+    mockApiService = MockApiService();
+    provider = MotelProvider(apiService: mockApiService);
+  });
+
+  group('MotelProvider Tests', () {
+    test('initial state should be correct', () {
+      expect(provider.motels, isEmpty);
+      expect(provider.selectedFilters, isEmpty);
+      expect(provider.isLoading, isFalse);
     });
 
-    test('fetchMotels updates motels list and isLoading state', () async {
-      // Mockando o retorno de fetchAllMotels para um Future com uma lista de motéis vazia
-      when(mockApiService.fetchAllMotels()).thenAnswer((_) async => <Motel>[]);
+    test('toggleFilter should add and remove filters', () {
+      provider.toggleFilter('hidro');
+      expect(provider.selectedFilters.contains('hidro'), isTrue);
 
-      // Verificando o estado inicial (deve ser falso, pois não há dados carregados ainda)
-      expect(provider.isLoading, false);
+      provider.toggleFilter('hidro');
+      expect(provider.selectedFilters.contains('hidro'), isFalse);
+    });
 
-      // Chamando o método para buscar os motéis
+    test('fetchMotels should update state correctly', () async {
+      final mockMotels = [
+        Motel(
+          fantasia: 'Test Motel',
+          logo: 'test.png',
+          bairro: 'Test',
+          distancia: 1.0,
+          suites: [],
+        )
+      ];
+
+      when(mockApiService.fetchAllMotels())
+          .thenAnswer((_) async => mockMotels);
+
       await provider.fetchMotels();
 
-      // Verificando o estado final (não deve estar carregando mais)
-      expect(provider.isLoading, false);
-      expect(provider.motels, <Motel>[]);  // Verifica que a lista de motéis está vazia
-
-      // Verificando se o método fetchAllMotels foi chamado corretamente
-      verify(mockApiService.fetchAllMotels()).called(1);
+      expect(provider.motels, equals(mockMotels));
+      expect(provider.isLoading, isFalse);
     });
-
   });
 }
