@@ -48,3 +48,37 @@ Não é necessário implementar navegação para outras telas.
 - HTTP
 - ...
 
+## 📂 Estrutura do Projeto
+```
+lib/
+├── controllers/ # Controladores de lógica de negócios
+│ └── motel_controller.dart
+│
+├── models/ # Modelos de dados
+│ ├── motel_model.dart
+│
+├── providers/ # Gerenciamento de estado
+│ └── motel_provider.dart
+│
+├── services/ # Serviços e integrações
+│ └── api_service.dart
+│
+├── views/ # Telas da aplicação
+│ └── motel_list_screen.dart
+│
+├── widgets/ # Componentes reutilizáveis
+│ ├── itens_suite_widgets.dart
+│ ├── motel_item_widgets.dart
+│ ├── periodo_widgets.dart
+│ └── motel_item.dart
+│ └── suite_widgets.dart
+│
+└── main.dart # Ponto de entrada da aplicação
+```
+
+Esta estrutura foi pensada para:
+- 🎯 Manter o código organizado
+- 🔄 Facilitar a manutenção
+- 📦 Permitir reuso de componentes
+- 🛠️ Separar responsabilidades
+- ⚡ Melhorar performance
