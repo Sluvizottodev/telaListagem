@@ -33,11 +33,10 @@ Não é necessário implementar navegação para outras telas.
 ## ✨ Funcionalidades
 
 - 📋 Listagem de motéis e suítes
-- 🔍 Filtros por características (hidro, piscina, etc.)
 - 💰 Exibição de preços e descontos
 - 🌐 Integração com API
 - 🔄 Gerenciamento de estado com Provider
-- ⚡ Carregamento otimizado de imagens
+- ⚡ Carregamento otimizado de imagens 
 
 ## 🛠️ Tecnologias Utilizadas
 
