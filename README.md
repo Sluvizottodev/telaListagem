@@ -13,6 +13,7 @@
 O desafio consiste em criar uma réplica da tela de listagem de motéis (apenas a aba "Ir Agora") do aplicativo Guia de Motéis GO, utilizando os seguintes links como API mock para obter os dados:
 
 https://jsonkeeper.com/b/1IXK
+
 https://www.npoint.io/docs/e728bb91e0cd56cc0711
 
 >📌 Requisitos:
